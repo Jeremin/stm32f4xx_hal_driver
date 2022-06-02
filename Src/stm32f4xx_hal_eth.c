@@ -1456,7 +1456,7 @@ HAL_StatusTypeDef HAL_ETH_ReleaseTxPacket(ETH_HandleTypeDef *heth)
     if (dmatxdesclist->PacketAddress[idx] == NULL)
     {
       /* No packet in use, skip to next.  */
-      idx = (idx + 1U) & (ETH_TX_DESC_CNT - 1U);
+      INCR_TX_DESC_INDEX(idx, 1U);
       pktInUse = 0U;
     }
 
@@ -1494,7 +1494,7 @@ HAL_StatusTypeDef HAL_ETH_ReleaseTxPacket(ETH_HandleTypeDef *heth)
         dmatxdesclist->PacketAddress[idx] = NULL;
 
         /* Update the transmit relesae index and number of buffers in use.  */
-        idx = (idx + 1U) & (ETH_TX_DESC_CNT - 1U);
+        INCR_TX_DESC_INDEX(idx, 1U);
         dmatxdesclist->BuffersInUse = numOfBuf;
         dmatxdesclist->releaseIndex = idx;
       }
